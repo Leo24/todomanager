@@ -317,6 +317,25 @@
           </form>
           <!-- /.search form -->
           <!-- sidebar menu: : style can be found in sidebar.less -->
+
+
+
+
+
+          <div class="projects" ng-controller="ProjectsController">
+            <!--<div class="data-render">{{ projects }}</div>-->
+            <ul class="projects-list" ng-controller="TasksController">
+              <li ng-repeat="project in projects">
+                <a href="" ng-click="getTasksList(project.id)">
+                  <p class="project-title">{{ project.title }}</p>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+
+
+
           <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
             <li class="active treeview">
@@ -1116,9 +1135,11 @@
 
     <!-- Controllers -->
     <script src="lib/angular/modules/site/controllers/TasksController.js"></script>
+    <script src="lib/angular/modules/site/controllers/ProjectsController.js"></script>
 
     <!-- Services -->
     <script src="lib/angular/modules/site/services/tasksService.js"></script>
+    <script src="lib/angular/modules/site/services/projectsService.js"></script>
     <!-- Directives -->
 
     <!-- End Angular app -->

@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use app\models\Task;
 
 /**
  * This is the model class for table "projects".
@@ -12,7 +13,7 @@ use Yii;
  * @property string $description
  * @property string $tasks_order
  */
-class Projects extends \yii\db\ActiveRecord
+class Project extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
@@ -46,4 +47,13 @@ class Projects extends \yii\db\ActiveRecord
             'tasks_order' => 'Tasks Order',
         ];
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTasks()
+    {
+        return $this->hasMany(Task::className(), ['project_id' => 'id']);
+    }
+
 }

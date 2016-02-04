@@ -47,6 +47,7 @@ $config = [
             'enablePrettyUrl' => true,
             'rules' => [
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'tasks'],
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'projects'],
             ],
         ]
     ],

@@ -1,5 +1,5 @@
-app.factory('tasksList', ['$http', function($http) {
-    return $http.get(window.location.href + 'rest-api/web/tasks/')
+app.factory('projects', ['$http', function($http) {
+    return $http.get(window.location.href + 'rest-api/web/projects/get-project-tasks')
         .success(function(data) {
             return data;
         })
