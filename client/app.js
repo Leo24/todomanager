@@ -1,1 +1,1 @@
-var app = angular.module('ToDoManager', []);
+var app = angular.module('ToDoManager', ['dndLists', 'ngMaterial']);

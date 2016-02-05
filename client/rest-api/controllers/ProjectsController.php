@@ -41,4 +41,20 @@ class ProjectsController extends ActiveController
         return false;
     }
 
+
+    public function actionCreateNewProject()
+    {
+        $request = Yii::$app->request;
+        if ($request->isPost) {
+            $newProject = $request->post('newProject');
+            $project = new Project();
+            $project ->title = $newProject['projectTitle'];
+            $project ->description = $newProject['projectDescription'];
+            $project ->user_id = $newProject['userId'];
+        }
+    }
+
+
+
+
 }

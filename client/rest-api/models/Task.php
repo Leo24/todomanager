@@ -3,7 +3,6 @@
 namespace app\models;
 
 use Yii;
-use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "tasks".
@@ -13,8 +12,10 @@ use yii\db\ActiveRecord;
  * @property string $description
  * @property string $create_date
  * @property string $due_date
- * @property integer $priority
+ * @property integer $complited
+ * @property string $priority
  * @property integer $project_id
+ * @property integer $task_order
  */
 class Task extends \yii\db\ActiveRecord
 {
@@ -32,11 +33,12 @@ class Task extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'description', 'create_date', 'due_date', 'priority', 'project_id'], 'required'],
+            [['title', 'description', 'create_date', 'due_date', 'complited', 'priority', 'project_id', 'task_order'], 'required'],
             [['description'], 'string'],
             [['create_date', 'due_date'], 'safe'],
-            [['priority', 'project_id'], 'integer'],
-            [['title'], 'string', 'max' => 128]
+            [['complited', 'project_id', 'task_order'], 'integer'],
+            [['title'], 'string', 'max' => 128],
+            [['priority'], 'string', 'max' => 64]
         ];
     }
 
@@ -51,8 +53,10 @@ class Task extends \yii\db\ActiveRecord
             'description' => 'Description',
             'create_date' => 'Create Date',
             'due_date' => 'Due Date',
+            'complited' => 'Complited',
             'priority' => 'Priority',
             'project_id' => 'Project ID',
+            'task_order' => 'Task Order',
         ];
     }
 }
