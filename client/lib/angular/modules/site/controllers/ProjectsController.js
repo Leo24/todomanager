@@ -1,4 +1,4 @@
-app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http',
+app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', '$rootScope',
     function($scope, projects, $filter, $http) {
         projects.success(function(data) {
             $scope.projects = data;
@@ -90,12 +90,13 @@ app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http',
         $scope.editTask=function($event, task){
 
             if ($event.target.className === 'fa fa-trash-o') {
+                $http({
+                    method: 'DELETE',
+                    url: window.location.href + 'rest-api/web/tasks/'+task.id,
+                    contentType: 'text/plain; charset=utf-8'
+                });
 
-debugger;
-
-                //deleteTask(task);
-
-
+                $event.target.parentElement.parentElement.parentElement.hidden=true;
 
             } else if ($event.target.className === 'btn btn-primary confirm-task-edit') {
 
@@ -115,13 +116,6 @@ debugger;
 
         };
 
-        $scope.deleteTask=function(task){
-            $http({
-                method: 'DELETE',
-                url: window.location.href + 'rest-api/web/tasks/'+task.id,
-                contentType: 'text/plain; charset=utf-8'
-            });
-        };
 
 
 

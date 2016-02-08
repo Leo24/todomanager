@@ -14,14 +14,9 @@
 <!-- General tools such as edit or delete-->
 <div class="tools">
     <i class="fa fa-edit" ng-click="showTaskDetails = !showTaskDetails"></i>
-    <i class="fa fa-trash-o" ng-click="editTask(info); Notifier = !Notifier"></i>
+    <i class="fa fa-trash-o" ng-click="editTask(info)"></i>
 </div>
 
-<div class="task-detailed-info ng-hide" ng-show="showTaskDetails">
-    <!--<p class="text task-title" task-id="{{ info.id }}">{{ info.title }}</p>-->
-    <!--<p class="text task-description" task-id="{{ info.id }}">{{ info.description }}</p>-->
-
-</div>
 <form class="ng-hide" name="{{ info.title }}" ng-submit="editTask(info)" ng-show="showTaskDetails">
     <fieldset class="form-group">
         <input type="text" name="title" class="form-control" id="taskTitle" ng-model="info.title">
@@ -45,12 +40,5 @@
         <button type="button" class="btn btn-link"  ng-click="showTaskDetails = ! showTaskDetails">Cancel</button>
     </div>
 </form>
-
-<div id="notifier" ng-show="Notifier">
-    <p>task deleted
-        <span id="undo_link">Undo</span>
-        <span class="hide_link" ng-click="Notifier = !Notifier">Hide</span>
-    </p>
-</div>
 
 
