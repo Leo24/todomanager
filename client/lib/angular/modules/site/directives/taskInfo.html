@@ -1,20 +1,56 @@
 
-                    <!-- drag handle -->
-                      <span class="handle">
+<!-- drag handle -->
+<span class="handle">
                         <i class="fa fa-ellipsis-v"></i>
                         <i class="fa fa-ellipsis-v"></i>
                       </span>
-                    <!-- checkbox -->
-                    <input type="checkbox" value="" name="" ng-model="isDone" ng-change="completeTask(isDone)">
-                    <!-- todo text -->
-                    <span class="text task-title" task-id="{{ info.id }}">{{ info.title }}</span>
-                    <!-- Emphasis label -->
-                    <small class="label label-danger"><i class="fa fa-clock-o"></i> 2 mins</small>
-                    <!-- General tools such as edit or delete-->
-                    <div class="tools">
-                        <i class="fa fa-edit"></i>
-                        <i class="fa fa-trash-o" ng-click="removeTask(info.id)"></i>
-                    </div>
+<!-- checkbox -->
+<!--<input type="checkbox" value="" name="" ng-model="isDone" ng-change="completeTask(isDone)">-->
+<!-- todo text -->
+<span class="checker {{ info.priority | lowercase }}-priority "></span>
+<span class="text task-title" task-id="{{ info.id }}" ng-show=" !showTaskDetails ">{{ info.title }}</span>
+<!-- Emphasis label -->
+<small class="label label-danger"><i class="fa fa-clock-o"></i> 2 mins</small>
+<!-- General tools such as edit or delete-->
+<div class="tools">
+    <i class="fa fa-edit" ng-click="showTaskDetails = !showTaskDetails"></i>
+    <i class="fa fa-trash-o" ng-click="editTask(info); Notifier = !Notifier"></i>
+</div>
 
+<div class="task-detailed-info ng-hide" ng-show="showTaskDetails">
+    <!--<p class="text task-title" task-id="{{ info.id }}">{{ info.title }}</p>-->
+    <!--<p class="text task-description" task-id="{{ info.id }}">{{ info.description }}</p>-->
+
+</div>
+<form class="ng-hide" name="{{ info.title }}" ng-submit="editTask(info)" ng-show="showTaskDetails">
+    <fieldset class="form-group">
+        <input type="text" name="title" class="form-control" id="taskTitle" ng-model="info.title">
+    </fieldset>
+    <fieldset class="form-group">
+        <textarea class="form-control" id="taskDescription" name="description"  rows="3" ng-model="info.description">{{ info.description }}</textarea>
+    </fieldset>
+    <fieldset class="form-group">
+        <select class="form-control" id="prioritySelect" ng-model="info.priority">
+            <option selected="selected" disabled>Task Priority</option>
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+        </select>
+    </fieldset>
+    <fieldset class="form-group">
+        <input data-provide="datepicker" class="form-control" id="dueDate" name="due_date" ng-model="info.due_date">
+    </fieldset>
+    <div class="buttons" >
+        <button type="submit" class="btn btn-primary confirm-task-edit" ng-click="editTask(); showTaskDetails = ! showTaskDetails"> OK </button>
+        <button type="button" class="btn btn-link"  ng-click="showTaskDetails = ! showTaskDetails">Cancel</button>
+    </div>
+</form>
+
+<div id="notifier" ng-show="Notifier">
+    <p>task deleted
+        <span id="undo_link">Undo</span>
+        <span class="hide_link" ng-click="Notifier = !Notifier">Hide</span>
+    </p>
+</div>
 
 
