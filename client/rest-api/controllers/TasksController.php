@@ -34,9 +34,9 @@ class TasksController extends ActiveController
                 $task->update();
                 if (($k+1) === $numItems) {
                     if ($task->update() !== false) {
-                        return 'Update successful';
+                        return 'Task order updated successfully';
                     } else {
-                        return 'Update failed';
+                        return 'Task order update failed';
                     }
                 }
             }

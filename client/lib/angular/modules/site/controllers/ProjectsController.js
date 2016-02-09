@@ -42,8 +42,6 @@ app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', 
 
         };
 
-
-
         $scope.addTask=function(){
             var newTask = {};
             if($scope.addTaskForm.taskTitle){
@@ -83,9 +81,6 @@ app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', 
             $scope.submitTasksOrder();
 
         };
-
-
-
 
         $scope.editTask=function($event, task){
 
@@ -162,6 +157,14 @@ app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', 
 
 
         $scope.today = new Date();
+
+
+        $scope.predicate = '';
+        $scope.reverse = true;
+        $scope.order = function(predicate) {
+            $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
+            $scope.predicate = predicate;
+        };
 
 
     }]);

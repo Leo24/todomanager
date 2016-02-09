@@ -634,11 +634,30 @@
 
 
           <div class="box box-primary">
+
+            <div class="order-filters">
+              <button class="filter btn btn-default" ng-click="order('title')">Title
+                <span class="sortorder" ng-show="predicate === 'title'" ng-class="{reverse:reverse}"></span>
+              </button>
+              <button class="filter btn btn-default" ng-click="order('create_date')">Create Date
+                <span class="sortorder" ng-show="predicate === 'create_date'" ng-class="{reverse:reverse}"></span>
+              </button>
+              <button class="filter btn btn-default" ng-click="order('due_date')">Due Date
+                <span class="sortorder" ng-show="predicate === 'due_date'" ng-class="{reverse:reverse}"></span>
+              </button>
+              <button class="filter btn btn-default" ng-click="order('complete')">Complete
+                <span class="sortorder" ng-show="predicate === 'complete'" ng-class="{reverse:reverse}"></span>
+              </button>
+              <button class="filter btn btn-default" ng-click="order('incomplete')">Incomplete
+                <span class="sortorder" ng-show="predicate === 'incomplete'" ng-class="{reverse:reverse}"></span>
+              </button>
+            </div>
+
             <div class="box-header">
               <div class="box-body tasks-list">
                 <ul project-id="" class="todo-list task"
                     dnd-list="project.tasks">
-                  <li ng-repeat="task in project.tasks"
+                  <li ng-repeat="task in project.tasks | orderBy:predicate:reverse"
                       dnd-draggable="task"
                       dnd-moved="project.tasks.splice($index, 1)"
                       dnd-effect-allowed="move"
