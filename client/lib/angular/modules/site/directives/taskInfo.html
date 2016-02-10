@@ -7,10 +7,15 @@
 <!-- checkbox -->
 <!--<input type="checkbox" value="" name="" ng-model="isDone" ng-change="completeTask(isDone)">-->
 <!-- todo text -->
-<span class="checker {{ info.priority | lowercase }}-priority "></span>
+<span class="checker {{ info.priority | lowercase }}-priority " ng-click="completeTask()"></span>
 <span class="text task-title" task-id="{{ info.id }}" ng-show=" !showTaskDetails ">{{ info.title }}</span>
+<span class="text create-date"  ng-show=" !showTaskDetails ">Create Date:{{ info.create_date}}</span>
+<span class="text due-date"  ng-show=" !showTaskDetails ">Due Date:{{ info.due_date}}</span>
+<span class="text days-left"  ng-show=" !showTaskDetails ">Days left: {{ info.days_left }}</span>
 <!-- Emphasis label -->
-<small class="label label-danger"><i class="fa fa-clock-o"></i> 2 mins</small>
+<small class="label" ng-class="getClass(info.due_date, info)"><i class="fa fa-clock-o"></i> {{ info.days_left }} left </small>
+
+<span class="completed" ng-show="">Completed</span>
 <!-- General tools such as edit or delete-->
 <div class="tools">
     <i class="fa fa-edit" ng-click="showTaskDetails = !showTaskDetails"></i>
