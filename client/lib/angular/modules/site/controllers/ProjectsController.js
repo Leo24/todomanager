@@ -12,6 +12,31 @@ app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', 
             $scope.project = $filter('filter')(projects, function (d) {return d.id === project_id;})[0];
         };
 
+
+        $scope.reorderProjects=function(){
+            $scope.reorderedProjects = $scope.projects;
+            var newProjectOrder=[];
+            angular.forEach($scope.reorderedProjects, function(value, key) {
+                newProjectOrder.push({'projectId':value.id, 'projectOrder':key})
+            }, newProjectOrder);
+
+            $http({
+                method: 'POST',
+                url: window.location.href + 'rest-api/web/projects/reorder-projects',
+                data: {newProjectOrder: newProjectOrder},
+                contentType: 'application/json; charset=utf-8'
+            })
+                .success(function(data) {
+                    return data;
+                })
+                .error(function(err) {
+                    return err;
+                });
+        };
+
+
+
+
         $scope.reorderTasks=function(event, index, item, external, type, allowedType){
             $scope.reorderedTasks = $scope.project.tasks;
         };
@@ -65,6 +90,11 @@ app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', 
             }
             newTask.taskOrder = parseInt($scope.project.tasks[$scope.project.tasks.length-1].task_order)+1;
 
+
+
+
+
+
             $http({
                 method: 'POST',
                 url: window.location.href + 'rest-api/web/tasks/create-new-task',
@@ -114,8 +144,9 @@ app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', 
 
 
 
-        $scope.completeTask=function(){};
+        $scope.completeTask=function(){
 
+        };
 
         $scope.addProject=function(){
             var newProject = {};
@@ -131,7 +162,7 @@ app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', 
             $http({
                 method: 'POST',
                 url: window.location.href + 'rest-api/web/projects/create-new-project',
-                data: {newTask: newProject},
+                data: {newProject: newProject},
                 contentType: 'application/json; charset=utf-8'
             })
                 .success(function(data) {
@@ -140,6 +171,35 @@ app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', 
                 .error(function(err) {
                     return err;
                 });
+        };
+
+        $scope.editProject=function(project){
+            $http({
+                method: 'POST',
+                url: window.location.href + 'rest-api/web/projects/update-project',
+                data: {project: project},
+                contentType: 'application/json; charset=utf-8'
+            })
+                .success(function(data) {
+                    debugger;
+                    return data;
+                })
+                .error(function(err) {
+                    return err;
+                });
+
+        };
+
+
+        $scope.removeProject=function($event, project){
+
+            $http({
+                method: 'DELETE',
+                url: window.location.href + 'rest-api/web/projects/'+project.id,
+                contentType: 'text/plain; charset=utf-8'
+            });
+
+            $event.target.parentElement.parentElement.parentElement.hidden=true;
         };
 
 

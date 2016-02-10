@@ -11,7 +11,7 @@ use app\models\Task;
  * @property integer $id
  * @property string $title
  * @property string $description
- * @property string $tasks_order
+ * @property string $project_order
  */
 class Project extends \yii\db\ActiveRecord
 {
@@ -29,8 +29,9 @@ class Project extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'description', 'tasks_order'], 'required'],
-            [['description', 'tasks_order'], 'string'],
+            [['title', 'description', 'project_order'], 'required'],
+            [['description'], 'string'],
+            [['project_order'], 'integer'],
             [['title'], 'string', 'max' => 128]
         ];
     }
@@ -44,7 +45,7 @@ class Project extends \yii\db\ActiveRecord
             'id' => 'ID',
             'title' => 'Title',
             'description' => 'Description',
-            'tasks_order' => 'Tasks Order',
+            'project_order' => 'Project Order',
         ];
     }
 
