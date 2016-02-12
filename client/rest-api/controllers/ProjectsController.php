@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use yii\rest\ActiveController;
 use app\models\Project;
+use app\models\Users;
 use yii\helpers\ArrayHelper;
 
 class ProjectsController extends ActiveController
@@ -13,9 +14,10 @@ class ProjectsController extends ActiveController
 
     public function actionGetProjectTasks()
     {
-        $user_id = 2;
         $request = Yii::$app->request;
-        if ($request->isGet) {
+        if ($request->isPost) {
+            $user_id = $request->post('userId');
+            $user =  Users::findOne($user_id);
             $projects = Project::find()
                 ->where(['user_id' => $user_id])
                 ->joinWith([
@@ -32,6 +34,7 @@ class ProjectsController extends ActiveController
                     return $a['task_order'] - $b['task_order'];
                 });
                 $project_array['tasks'] = $projects;
+                $project_array['username'] = $user->username;
                 $projects_array[] = $project_array;
                 usort($projects_array, function ($a, $b) {
                     return $a['project_order'] - $b['project_order'];

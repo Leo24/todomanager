@@ -1,9 +1,15 @@
-app.factory('projects', ['$http', function($http) {
-    return $http.get(window.location.href + 'rest-api/web/projects/get-project-tasks')
-        .success(function(data) {
-            return data;
+app.factory('projects', ['$http', 'LocalStorage', function($http, LocalStorage) {
+    var userId = LocalStorage.getData();
+    return $http({
+            method: 'POST',
+            url: window.location.origin + '/rest-api/web/projects/get-project-tasks',
+            data: {userId: userId},
+            contentType: 'application/json; charset=utf-8'
         })
-        .error(function(err) {
-            return err;
-        });
+            .success(function(data) {
+                return data;
+            })
+            .error(function(err) {
+                return err;
+            });
 }]);

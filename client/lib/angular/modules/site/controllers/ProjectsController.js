@@ -1,5 +1,5 @@
-app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', '$rootScope',
-    function($scope, projects, $filter, $http) {
+app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', '$rootScope', 'LocalStorage',
+    function($scope, projects, $filter, $http, LocalStorage) {
         projects.success(function(data) {
             $scope.projects = data;
             console.log($scope.projects);
@@ -22,7 +22,7 @@ app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', 
 
             $http({
                 method: 'POST',
-                url: window.location.href + 'rest-api/web/projects/reorder-projects',
+                url: window.location.origin + '/rest-api/web/projects/reorder-projects',
                 data: {newProjectOrder: newProjectOrder},
                 contentType: 'application/json; charset=utf-8'
             })
@@ -50,7 +50,7 @@ app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', 
 
                 $http({
                     method: 'POST',
-                    url: window.location.href + 'rest-api/web/tasks/reorder-tasks',
+                    url: window.location.origin + '/rest-api/web/tasks/reorder-tasks',
                     data: {newTaskOrder: newTaskOrder},
                     contentType: 'application/json; charset=utf-8'
                 })
@@ -68,6 +68,7 @@ app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', 
         };
 
         $scope.addTask=function(){
+            debugger;
             var newTask = {};
             if($scope.addTaskForm.taskTitle){
                 newTask.taskTitle = $scope.addTaskForm.taskTitle;
@@ -88,16 +89,17 @@ app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', 
             if($scope.project.id){
                 newTask.projectId = $scope.project.id;
             }
-            newTask.taskOrder = parseInt($scope.project.tasks[$scope.project.tasks.length-1].task_order)+1;
 
-
-
-
-
+            debugger;
+            if(($scope.project.tasks.length-1) == -1){
+                newTask.taskOrder = 0;
+            }else{
+                newTask.taskOrder = parseInt($scope.project.tasks[$scope.project.tasks.length-1].task_order)+1;
+            }
 
             $http({
                 method: 'POST',
-                url: window.location.href + 'rest-api/web/tasks/create-new-task',
+                url: window.location.origin + '/rest-api/web/tasks/create-new-task',
                 data: {newTask: newTask},
                 contentType: 'application/json; charset=utf-8'
             })
@@ -117,7 +119,7 @@ app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', 
             if ($event.target.className === 'fa fa-trash-o') {
                 $http({
                     method: 'DELETE',
-                    url: window.location.href + 'rest-api/web/tasks/'+task.id,
+                    url: window.location.origin + '/rest-api/web/tasks/'+task.id,
                     contentType: 'text/plain; charset=utf-8'
                 });
 
@@ -127,7 +129,7 @@ app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', 
 
                 $http({
                     method: 'POST',
-                    url: window.location.href + 'rest-api/web/tasks/update-task',
+                    url: window.location.origin + '/rest-api/web/tasks/update-task',
                     data: {newTask: task},
                     contentType: 'application/json; charset=utf-8'
                 })
@@ -156,12 +158,12 @@ app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', 
             }
             if($scope.addProjectForm.projectDescription){
                 newProject.projectDescription= $scope.addProjectForm.projectDescription;
-                $scope.addProjectForm.project.Description = '';
+                $scope.addProjectForm.projectDescription = '';
             }
 
             $http({
                 method: 'POST',
-                url: window.location.href + 'rest-api/web/projects/create-new-project',
+                url: window.location.origin + '/rest-api/web/projects/create-new-project',
                 data: {newProject: newProject},
                 contentType: 'application/json; charset=utf-8'
             })
@@ -176,7 +178,7 @@ app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', 
         $scope.editProject=function(project){
             $http({
                 method: 'POST',
-                url: window.location.href + 'rest-api/web/projects/update-project',
+                url: window.location.origin + '/rest-api/web/projects/update-project',
                 data: {project: project},
                 contentType: 'application/json; charset=utf-8'
             })
@@ -195,7 +197,7 @@ app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', 
 
             $http({
                 method: 'DELETE',
-                url: window.location.href + 'rest-api/web/projects/'+project.id,
+                url: window.location.origin + '/rest-api/web/projects/'+project.id,
                 contentType: 'text/plain; charset=utf-8'
             });
 
@@ -220,11 +222,17 @@ app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', 
 
 
         $scope.predicate = '';
-        $scope.reverse = true;
+        $scope.reverse = false;
         $scope.order = function(predicate) {
-            $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
+            $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : true;
             $scope.predicate = predicate;
         };
+
+$scope.logout=function(){
+    LocalStorage.setData(null);
+    $window.location.href = '#/login';
+};
+
 
 
     }]);
