@@ -1,23 +1,95 @@
-<div class="row">
+<!--<div class="row">-->
 
-    <div class="col-xs-4 col-xs-offset-4">
+<!--<div class="col-xs-4 col-xs-offset-4">-->
 
-        <form role="form">
-            <div class="form-group">
-                <label for="login">Login</label>
-                <input ng-model="model.username" class="form-control" id="login" placeholder="Enter login" autofocus>
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" ng-model="model.password" class="form-control" id="password"
-                       placeholder="Enter password">
-            </div>
-            <p class="hint-block">type demo/demo</p>
+<!--<form role="form">-->
+<!--<div class="form-group">-->
+<!--<label for="login">Login</label>-->
+<!--<input ng-model="model.username" class="form-control" id="login" placeholder="Enter login" autofocus>-->
+<!--</div>-->
+<!--<div class="form-group">-->
+<!--<label for="password">Password</label>-->
+<!--<input type="password" ng-model="model.password" class="form-control" id="password"-->
+<!--placeholder="Enter password">-->
+<!--</div>-->
+<!--<p class="hint-block">type demo/demo</p>-->
 
-            <button type="submit" ng-click="login()" class="btn btn-default">Submit</button>
+<!--<button type="submit" ng-click="login()" class="btn btn-default">Submit</button>-->
 
-        </form>
+<!--</form>-->
 
+<!--</div>-->
+
+<!--</div>-->
+
+
+
+
+<div class="" id="loginModal">
+    <div class="modal-header">
+        <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>-->
+        <h3>Have an Account?</h3>
     </div>
+    <div class="modal-body">
+        <div class="well">
+            <ul class="nav nav-tabs">
+                <li class="active"><p href="#login" data-toggle="tab">Login</p></li>
+                <li><p href="#create" data-toggle="tab">Create Account</p></li>
+            </ul>
+            <div id="myTabContent" class="tab-content">
+                <div class="tab-pane active in" id="login">
+                    <form name="loginForm" class="form-horizontal" ng-submit="login(loginForm.$valid)" novalidate>
+                        <fieldset>
+                            <div id="legend">
+                                <legend class="">Login</legend>
+                            </div>
+                            <div class="control-group">
+                                <!-- Username -->
+                                <label class="control-label"  for="username">Username</label>
+                                <div class="controls" ng-class="{ 'has-error' : loginForm.name.$invalid && !loginForm.name.$pristine }">
+                                    <input type="text" id="username" name="username" placeholder="Username" class="input-xlarge" ng-model="username" required>
+                                    <p ng-show="loginForm.name.$invalid && !loginForm.name.$pristine" class="help-block">Username is required.</p>
+                                </div>
+                            </div>
 
+                            <div class="control-group">
+                                <!-- Password-->
+                                <label class="control-label" for="password">Password</label>
+                                <div class="controls" ng-class="{ 'has-error' : loginForm.password.$invalid && !loginForm.password.$pristine }">
+                                    <input type="password" id="password" name="password" placeholder="Password" class="input-xlarge" ng-model="password" required>
+                                    <p ng-show="loginForm.password.$invalid && !loginForm.password.$pristine" class="help-block">Password is required.</p>
+                                </div>
+                            </div>
+
+
+                            <div class="control-group">
+                                <!-- Button -->
+                                <div class="controls">
+                                    <button type="submit" class="btn btn-success" ng-disabled="loginForm.$invalid">Login</button>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+                <div class="tab-pane fade" id="create">
+                    <form name="createAccount" ng-submit="create(createAccount.$isValid)" id="tab" novalidate>
+                        <label>Username</label>
+                        <input type="text" name="username" value="" class="input-xlarge" ng-model="account.username" ng-minlength="3" required>
+                        <p ng-show="createAccount.username.$invalid && !createAccount.username.$pristine" class="help-block">Username is required.</p>
+                        <label>Email</label>
+                        <input type="text" name="email" value="" class="input-xlarge" ng-model="account.email">
+                        <p ng-show="createAccount.email.$invalid && !createAccount.email.$pristine" class="help-block">Enter a valid email.</p>
+                        <label>Password</label>
+                        <input type="password" name="password" value="" class="input-xlarge" ng-model="password" ng-minlength="6" required>
+                        <p ng-show="createAccount.password.$error.minlength" class="help-block">Password is too short.</p>
+                        <br/>
+                        <button class="btn btn-primary" ng-disabled="createAccount.$invalid">Create Account</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+<!--<script class="cssdeck" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
+<!--<script class="cssdeck" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>-->

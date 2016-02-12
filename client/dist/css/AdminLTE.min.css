@@ -51,3 +51,96 @@ ul[dnd-list] > li {
     width: 100%;
     float: left;
 }
+
+.order-filters{
+    display: block;
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 3%;
+}
+.order-filters button{
+    margin: 0 0.3%;
+}
+
+.sortorder:after {
+    content: '\25b2';
+}
+.sortorder.reverse:after {
+    content: '\25bc';
+}
+
+.projects-list p,
+.projects-list .tools{
+    display: inline-block;
+}
+.projects-list .tools{
+    margin-right: 15px;
+}
+
+.modal-header,
+.modal-body{
+    width: 50%;
+    margin: 0 auto;
+}
+#loginModal .modal-body{
+    max-height: 100%;
+}
+
+
+.modal-body .nav-tabs>a {
+    color: #08c;
+    text-decoration: none;
+}
+
+
+.nav-tabs>li.active>p, .nav-tabs>li.active>p:focus, .nav-tabs>li.active>p:hover {
+    color: #555;
+    cursor: default;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-bottom-color: transparent;
+}
+
+.nav-tabs>.active>p, .nav-tabs>.active>p:hover, .nav-tabs>.active>p:focus {
+    color: #555;
+    cursor: default;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-bottom-color: transparent;
+}
+
+.nav-tabs>li>p {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    line-height: 20px;
+    border: 1px solid transparent;
+    -webkit-border-radius: 4px 4px 0 0;
+    -moz-border-radius: 4px 4px 0 0;
+    border-radius: 4px 4px 0 0;
+    cursor: pointer;
+}
+
+.nav-tabs>li>p, .nav-pills>li>p {
+    padding-right: 12px;
+    padding-left: 12px;
+    margin-right: 2px;
+    line-height: 14px;
+}
+
+.nav>li>p {
+    display: block;
+}
+
+.nav-tabs>li>p {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    line-height: 20px;
+    border: 1px solid transparent;
+    -webkit-border-radius: 4px 4px 0 0;
+    -moz-border-radius: 4px 4px 0 0;
+    border-radius: 4px 4px 0 0;
+}
+
+.password-match{
+    color: red;
+}
