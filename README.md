@@ -1,4 +1,4 @@
-# todomanager
+# Todomanager
 study angular + yii2 project
 
 1. Clone project from "dev" branch from git@github.com:Leo24/todomanager.git
