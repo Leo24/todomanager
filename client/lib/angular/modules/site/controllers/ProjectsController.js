@@ -68,8 +68,22 @@ app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', 
         };
 
         $scope.addTask=function(){
-            debugger;
             var newTask = {};
+            angular.element(document.getElementsByClassName('todo-list'))
+                .append("<li><span class='handle'>" +
+                "<i class='fa fa-ellipsis-v'></i><i class='fa fa-ellipsis-v'></i>" +
+                "</span>" +
+                "<span class='checker " + $scope.addTaskForm.taskPriority + "-priority' ng-click='completeTask()'></span>" +
+                "<span class='text task-title' ng-show='!showTaskDetails'>" + $scope.addTaskForm.taskTitle + "</span>" +
+                "<span class='text create-date'  ng-show='!showTaskDetails'>Create Date: " + $scope.today + "</span>" +
+                "<span class='text due-date'  ng-show='!showTaskDetails'>Due Date:" + $scope.taskDueDate + "</span>" +
+                "<small class='label' ng-class='getClass(info.due_date, info)'><i class='fa fa-clock-o'></i> </small>" +
+                "<div class='tools'>" +
+                "<i class='fa fa-edit' ng-click='showTaskDetails = !showTaskDetails'></i>" +
+                "<i class='fa fa-trash-o' ng-click='editTask(info)'></i>" +
+                "</div></li>"
+            );
+
             if($scope.addTaskForm.taskTitle){
                 newTask.taskTitle = $scope.addTaskForm.taskTitle;
                 $scope.addTaskForm.taskTitle = '';
@@ -90,7 +104,6 @@ app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', 
                 newTask.projectId = $scope.project.id;
             }
 
-            debugger;
             if(($scope.project.tasks.length-1) == -1){
                 newTask.taskOrder = 0;
             }else{
@@ -112,11 +125,14 @@ app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', 
 
             $scope.submitTasksOrder();
 
+
+
         };
 
         $scope.editTask=function($event, task){
-
+            debugger;
             if ($event.target.className === 'fa fa-trash-o') {
+                debugger;
                 $http({
                     method: 'DELETE',
                     url: window.location.origin + '/rest-api/web/tasks/'+task.id,
@@ -218,7 +234,8 @@ app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', 
         };
 
 
-        $scope.today = new Date();
+        //$scope.today = new Date();
+        $scope.today = $filter('date')(new Date(), "yyyy-MM-dd");
 
 
         $scope.predicate = '';
@@ -228,11 +245,10 @@ app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', 
             $scope.predicate = predicate;
         };
 
-$scope.logout=function(){
-    LocalStorage.setData(null);
-    $window.location.href = '#/login';
-};
-
+        $scope.logout=function(){
+            LocalStorage.setData(null);
+            $window.location.href = '#/login';
+        };
 
 
     }]);
