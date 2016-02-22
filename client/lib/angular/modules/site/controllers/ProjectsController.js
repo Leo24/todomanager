@@ -68,46 +68,33 @@ app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', 
         };
 
         $scope.addTask=function(){
-            var newTask = {};
-            angular.element(document.getElementsByClassName('todo-list'))
-                .append("<li><span class='handle'>" +
-                "<i class='fa fa-ellipsis-v'></i><i class='fa fa-ellipsis-v'></i>" +
-                "</span>" +
-                "<span class='checker " + $scope.addTaskForm.taskPriority + "-priority' ng-click='completeTask()'></span>" +
-                "<span class='text task-title' ng-show='!showTaskDetails'>" + $scope.addTaskForm.taskTitle + "</span>" +
-                "<span class='text create-date'  ng-show='!showTaskDetails'>Create Date: " + $scope.today + "</span>" +
-                "<span class='text due-date'  ng-show='!showTaskDetails'>Due Date:" + $scope.taskDueDate + "</span>" +
-                "<small class='label' ng-class='getClass(info.due_date, info)'><i class='fa fa-clock-o'></i> </small>" +
-                "<div class='tools'>" +
-                "<i class='fa fa-edit' ng-click='showTaskDetails = !showTaskDetails'></i>" +
-                "<i class='fa fa-trash-o' ng-click='editTask(info)'></i>" +
-                "</div></li>"
-            );
+            $scope.addTaskForm.create_date = $filter('date')($scope.today, "yyyy-MM-dd");;
 
-            if($scope.addTaskForm.taskTitle){
-                newTask.taskTitle = $scope.addTaskForm.taskTitle;
-                $scope.addTaskForm.taskTitle = '';
+            $scope.project.tasks.push($scope.addTaskForm);
+            var newTask = {};
+
+            if($scope.addTaskForm.title){
+                newTask.taskTitle = $scope.addTaskForm.title;
             }
-            if($scope.addTaskForm.taskDescription){
-                newTask.taskDescription = $scope.addTaskForm.taskDescription;
-                $scope.addTaskForm.taskDescription = '';
+            if($scope.addTaskForm.description){
+                newTask.taskDescription = $scope.addTaskForm.description;
             }
-            if($scope.addTaskForm.taskPriority){
-                newTask.taskPriority = $scope.addTaskForm.taskPriority;
-                $scope.addTaskForm.taskPriority = 0;
+            if($scope.addTaskForm.priority){
+                newTask.taskPriority = $scope.addTaskForm.priority;
             }
-            if($scope.taskDueDate){
-                newTask.taskDueDate = $scope.taskDueDate;
-                $scope.taskDueDate = 'Task Due Date';
+            if($scope.addTaskForm.due_date){
+                newTask.taskDueDate = $scope.addTaskForm.due_date;
             }
             if($scope.project.id){
                 newTask.projectId = $scope.project.id;
             }
 
+            $scope.addTaskForm = {};
+
             if(($scope.project.tasks.length-1) == -1){
                 newTask.taskOrder = 0;
             }else{
-                newTask.taskOrder = parseInt($scope.project.tasks[$scope.project.tasks.length-1].task_order)+1;
+                newTask.taskOrder = $scope.project.tasks.length;
             }
 
             $http({
@@ -129,10 +116,10 @@ app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', 
 
         };
 
+        $scope.myVal = '<button ng-click=\'buttonClick()\'>I\'m button</button>';
+
         $scope.editTask=function($event, task){
-            debugger;
             if ($event.target.className === 'fa fa-trash-o') {
-                debugger;
                 $http({
                     method: 'DELETE',
                     url: window.location.origin + '/rest-api/web/tasks/'+task.id,
@@ -158,9 +145,6 @@ app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', 
             }
 
         };
-
-
-
 
         $scope.completeTask=function(){
 
@@ -243,6 +227,22 @@ app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', 
         $scope.order = function(predicate) {
             $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : true;
             $scope.predicate = predicate;
+        };
+
+
+        $scope.tasksForToday=function(){
+
+            debugger;
+            angular.element(document.getElementsByClassName('todo-list'));
+
+        };
+
+        $scope.getCompletedTasks=function(){
+
+        };
+
+        $scope.getIncompletedTasks=function(){
+
         };
 
         $scope.logout=function(){

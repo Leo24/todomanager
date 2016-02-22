@@ -359,10 +359,13 @@
                             <button class="filter btn btn-default" ng-click="order('due_date')">Due Date
                                 <span class="sortorder" ng-show="predicate === 'due_date'" ng-class="{reverse:reverse}"></span>
                             </button>
-                            <button class="filter btn btn-default" ng-click="order('complete')">Complete
+                            <button class="filter btn btn-default" ng-click="order('title'); tasksForToday()">Tasks for today
                                 <span class="sortorder" ng-show="predicate === 'complete'" ng-class="{reverse:reverse}"></span>
                             </button>
-                            <button class="filter btn btn-default" ng-click="order('incomplete')">Incomplete
+                            <button class="filter btn btn-default" ng-click="order('complete'); getCompletedTasks() ">Completed tasks
+                                <span class="sortorder" ng-show="predicate === 'complete'" ng-class="{reverse:reverse}"></span>
+                            </button>
+                            <button class="filter btn btn-default" ng-click="order('title'); getIncompletedTasks()">Incompleted tasks
                                 <span class="sortorder" ng-show="predicate === 'incomplete'" ng-class="{reverse:reverse}"></span>
                             </button>
                         </div>
@@ -370,7 +373,7 @@
                         <div class="box-header">
                             <div class="box-body tasks-list">
                                 <ul project-id="" class="todo-list task"
-                                    dnd-list="project.tasks">
+                                    dnd-list="project.tasks" id="todo-list">
                                     <li ng-repeat="task in project.tasks | orderBy:predicate:reverse"
                                         dnd-draggable="task"
                                         dnd-moved="project.tasks.splice($index, 1)"
@@ -391,15 +394,15 @@
                                     <form name="addTaskForm" ng-submit="addTask(reorderedTasks)">
                                         <fieldset class="form-group">
                                             <!--<label for="taskTitle">Task Title</label>-->
-                                            <input type="text" class="form-control" id="taskTitle" placeholder="Task Title" ng-model="addTaskForm.taskTitle">
+                                            <input type="text" class="form-control" id="taskTitle" placeholder="Task Title" ng-model="addTaskForm.title">
                                         </fieldset>
                                         <fieldset class="form-group">
                                             <!--<label for="taskDescription">Task Description</label>-->
-                                            <textarea class="form-control" id="taskDescription" rows="3" placeholder="Task Description" ng-model="addTaskForm.taskDescription"></textarea>
+                                            <textarea class="form-control" id="taskDescription" rows="3" placeholder="Task Description" ng-model="addTaskForm.description"></textarea>
                                         </fieldset>
                                         <fieldset class="form-group">
                                             <!--<label for="prioritySelect">Task Priority</label>-->
-                                            <select class="form-control" id="prioritySelect" ng-model="addTaskForm.taskPriority">
+                                            <select class="form-control" id="prioritySelect" ng-model="addTaskForm.priority">
                                                 <option selected="selected" disabled>Task Priority</option>
                                                 <option value="high">High</option>
                                                 <option value="medium">Medium</option>
@@ -408,10 +411,10 @@
                                         </fieldset>
                                         <fieldset class="form-group">
                                             <!--<label for="dueDate">Task Due Date</label>-->
-                                            <input data-provide="datepicker" class="form-control" id="dueDate" placeholder="Task Due Date" ng-model="taskDueDate">
+                                            <input data-provide="datepicker" class="form-control" id="dueDate" placeholder="Task Due Date" ng-model="addTaskForm.due_date">
                                         </fieldset>
                                         <div class="buttons" ng-click="showTaskFields = !showTaskFields">
-                                            <button type="submit" class="btn btn-primary"  >Add Task</button>
+                                            <button type="submit" class="btn btn-primary" ng-click="showTaskFields = !showTaskFields" >Add Task</button>
                                             <button type="button" class="btn btn-link"  ng-click="clearTaskForm()">Cancel</button>
                                         </div>
                                     </form>
@@ -419,13 +422,6 @@
 
                                 <div class="box-footer clearfix no-border" ng-show="!showTaskFields">
                                     <button class="btn btn-default pull-right" ng-click="showTaskFields = !showTaskFields"><i class="fa fa-plus"></i> Add New Task</button>
-                                </div>
-
-
-                                <div class="row">
-                                    <div class="debug">
-                                        <p class="text-info">{{ reorderedTasks }}</p>
-                                    </div>
                                 </div>
 
                             </div>
