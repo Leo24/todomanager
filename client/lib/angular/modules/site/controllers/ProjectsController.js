@@ -68,7 +68,7 @@ app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', 
         };
 
         $scope.addTask=function(){
-            $scope.addTaskForm.create_date = $filter('date')($scope.today, "yyyy-MM-dd");;
+            $scope.addTaskForm.create_date = $filter('date')($scope.today, "yyyy-MM-dd");
 
             $scope.project.tasks.push($scope.addTaskForm);
             var newTask = {};
@@ -126,7 +126,13 @@ app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', 
                     contentType: 'text/plain; charset=utf-8'
                 });
 
-                $event.target.parentElement.parentElement.parentElement.hidden=true;
+                var newProjectTasks = [];
+                angular.forEach($scope.project.tasks, function(value, key) {
+                    if(value.id !== task.id){
+                        newProjectTasks.push(value);
+                    }
+                }, newProjectTasks);
+                $scope.project.tasks = newProjectTasks;
 
             } else if ($event.target.className === 'btn btn-primary confirm-task-edit') {
 
@@ -153,7 +159,7 @@ app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', 
         $scope.addProject=function(){
             var newProject = {};
             if($scope.addProjectForm.projectTitle){
-                newProject.taskTitle = $scope.addProjectForm.projectTitle;
+                newProject.projectTitle = $scope.addProjectForm.projectTitle;
                 $scope.addProjectForm.projectTitle = '';
             }
             if($scope.addProjectForm.projectDescription){
@@ -201,7 +207,16 @@ app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', 
                 contentType: 'text/plain; charset=utf-8'
             });
 
-            $event.target.parentElement.parentElement.parentElement.hidden=true;
+            var newProjects = [];
+            angular.forEach($scope.projects, function(value, key) {
+                if(value.id !== project.id){
+                    newProjects.push(value);
+                }
+            }, newProjects);
+            debugger;
+            $scope.projects = newProjects;
+            debugger;
+
         };
 
 
