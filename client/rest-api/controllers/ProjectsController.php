@@ -56,7 +56,14 @@ class ProjectsController extends ActiveController
             $project = new Project();
             $project ->title = $newProject['projectTitle'];
             $project ->description = $newProject['projectDescription'];
+            $project ->project_order = $newProject['projectOrder'];
             $project ->user_id = $newProject['userId'];
+            $project ->save();
+            if ($project->save() !== false) {
+                return 'Project created successfully';
+            } else {
+                return 'Project create fail';
+            }
         }
     }
 

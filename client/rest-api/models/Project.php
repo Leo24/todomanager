@@ -3,7 +3,6 @@
 namespace app\models;
 
 use Yii;
-use app\models\Task;
 
 /**
  * This is the model class for table "projects".
@@ -11,7 +10,8 @@ use app\models\Task;
  * @property integer $id
  * @property string $title
  * @property string $description
- * @property string $project_order
+ * @property integer $user_id
+ * @property integer $project_order
  */
 class Project extends \yii\db\ActiveRecord
 {
@@ -29,9 +29,9 @@ class Project extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'description', 'project_order'], 'required'],
+            [['title', 'description', 'user_id', 'project_order'], 'required'],
             [['description'], 'string'],
-            [['project_order'], 'integer'],
+            [['user_id', 'project_order'], 'integer'],
             [['title'], 'string', 'max' => 128]
         ];
     }
@@ -45,9 +45,11 @@ class Project extends \yii\db\ActiveRecord
             'id' => 'ID',
             'title' => 'Title',
             'description' => 'Description',
+            'user_id' => 'User ID',
             'project_order' => 'Project Order',
         ];
     }
+
 
     /**
      * @return \yii\db\ActiveQuery

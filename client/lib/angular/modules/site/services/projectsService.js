@@ -1,5 +1,7 @@
-app.factory('projects', ['$http', 'LocalStorage', function($http, LocalStorage) {
-    var userId = LocalStorage.getData();
+app.factory('projects', ['$http', 'localStorageService', '$window', function($http, localStorageService, $window) {
+
+    var userId = localStorageService.get('userID');
+
     return $http({
             method: 'POST',
             url: window.location.origin + '/rest-api/web/projects/get-project-tasks',

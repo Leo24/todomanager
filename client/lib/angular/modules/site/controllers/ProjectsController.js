@@ -1,5 +1,8 @@
-app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', '$rootScope', 'LocalStorage',
-    function($scope, projects, $filter, $http, LocalStorage) {
+app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', 'localStorageService', '$window',
+    function($scope, projects, $filter, $http, localStorageService, $window) {
+        if (localStorageService.isSupported) {
+            if (localStorageService.get('userID')) {
+
         projects.success(function(data) {
             $scope.projects = data;
             console.log($scope.projects);
@@ -158,14 +161,15 @@ app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', 
 
         $scope.addProject=function(){
             var newProject = {};
-            if($scope.addProjectForm.projectTitle){
-                newProject.projectTitle = $scope.addProjectForm.projectTitle;
-                $scope.addProjectForm.projectTitle = '';
+            if($scope.addProjectForm.title){
+                newProject.projectTitle = $scope.addProjectForm.title;
             }
-            if($scope.addProjectForm.projectDescription){
-                newProject.projectDescription= $scope.addProjectForm.projectDescription;
-                $scope.addProjectForm.projectDescription = '';
+            if($scope.addProjectForm.description){
+                newProject.projectDescription= $scope.addProjectForm.description;
             }
+
+            newProject.userId = localStorageService.get('userID');
+            newProject.projectOrder = $scope.projects.length+1;
 
             $http({
                 method: 'POST',
@@ -179,6 +183,7 @@ app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', 
                 .error(function(err) {
                     return err;
                 });
+            $scope.projects.push($scope.addProjectForm);
         };
 
         $scope.editProject=function(project){
@@ -201,11 +206,11 @@ app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', 
 
         $scope.removeProject=function($event, project){
 
-            $http({
-                method: 'DELETE',
-                url: window.location.origin + '/rest-api/web/projects/'+project.id,
-                contentType: 'text/plain; charset=utf-8'
-            });
+            //$http({
+            //    method: 'DELETE',
+            //    url: window.location.origin + '/rest-api/web/projects/'+project.id,
+            //    contentType: 'text/plain; charset=utf-8'
+            //});
 
             var newProjects = [];
             angular.forEach($scope.projects, function(value, key) {
@@ -213,7 +218,6 @@ app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', 
                     newProjects.push(value);
                 }
             }, newProjects);
-            debugger;
             $scope.projects = newProjects;
             debugger;
 
@@ -261,9 +265,18 @@ app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', 
         };
 
         $scope.logout=function(){
-            LocalStorage.setData(null);
+            if(localStorageService.isSupported) {
+                localStorageService.remove('userID');
+            }
             $window.location.href = '#/login';
         };
+
+
+            } else {
+                $window.location.href = '#/login';
+                return false;
+            }
+        }
 
 
     }]);
