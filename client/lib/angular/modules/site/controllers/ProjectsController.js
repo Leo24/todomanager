@@ -2,12 +2,27 @@ app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', 
     function($scope, projects, $filter, $http, localStorageService, $window) {
         if (localStorageService.isSupported) {
             if (localStorageService.get('userID')) {
+                var userId = localStorageService.get('userID');
 
-        projects.success(function(data) {
-            $scope.projects = data;
-            console.log($scope.projects);
-            $scope.project = $scope.projects[0];
-        });
+
+
+                projects.getData(userId, function(data) {
+                    $scope.projects = data;
+                    console.log($scope.projects);
+                    $scope.project = $scope.projects[0];
+                    $scope.project.defaultTasks = $scope.project.tasks;
+                }, function(error) {
+                    console.log(error);
+                });
+
+
+
+
+        //projects.success(function(data) {
+        //    $scope.projects = data;
+        //    console.log($scope.projects);
+        //    $scope.project = $scope.projects[0];
+        //});
 
         $scope.getProjectTasks=function(project_id){
             $scope.submitTasksOrder();
@@ -204,7 +219,7 @@ app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', 
         };
 
 
-        $scope.removeProject=function($event, project){
+        $scope.removeProject=function(project){
 
             //$http({
             //    method: 'DELETE',
@@ -212,14 +227,24 @@ app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', 
             //    contentType: 'text/plain; charset=utf-8'
             //});
 
-            var newProjects = [];
-            angular.forEach($scope.projects, function(value, key) {
-                if(value.id !== project.id){
-                    newProjects.push(value);
+            //var newProjects = [];
+            //angular.forEach($scope.projects, function(value, key) {
+            //    if(value.id !== project.id){
+            //        newProjects.push(value);
+            //    }
+            //}, newProjects);
+            //$scope.projects = newProjects;
+
+
+            for (var i = $scope.projects.length - 1; i >= 0; i--) {
+                if ($scope.projects[i].id == project.id) {
+                    $scope.projects.splice(i, 1);
                 }
-            }, newProjects);
-            $scope.projects = newProjects;
+            }
+
+
             debugger;
+            $window.location.href = '#/todomanager';
 
         };
 
@@ -246,14 +271,17 @@ app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', 
         $scope.order = function(predicate) {
             $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : true;
             $scope.predicate = predicate;
+            $scope.project.tasks = $scope.project.defaultTasks;
+
         };
 
 
         $scope.tasksForToday=function(){
+            $scope.project.tasks = $scope.project.todayTasks;
+        };
 
-            debugger;
-            angular.element(document.getElementsByClassName('todo-list'));
-
+        $scope.tasksForWeek=function(){
+            $scope.project.tasks = $scope.project.weekTasks;
         };
 
         $scope.getCompletedTasks=function(){

@@ -277,7 +277,7 @@
                             <p class="project-title">{{ project.title }}</p>
                             <div class="tools pull-right">
                                 <i class="fa fa-edit" ng-click="showProjectDetails = !showProjectDetails"></i>
-                                <i class="fa fa-trash-o" ng-click="removeProject($event, project)"></i>
+                                <i class="fa fa-trash-o" ng-click="removeProject(project)"></i>
                             </div>
 
 
@@ -359,13 +359,16 @@
                             <button class="filter btn btn-default" ng-click="order('due_date')">Due Date
                                 <span class="sortorder" ng-show="predicate === 'due_date'" ng-class="{reverse:reverse}"></span>
                             </button>
-                            <button class="filter btn btn-default" ng-click="order('title'); tasksForToday()">Tasks for today
-                                <span class="sortorder" ng-show="predicate === 'due_date'" ng-class="{reverse:reverse}"></span>
-                            </button>
                             <button class="filter btn btn-default" ng-click="order('complete'); getCompletedTasks() ">Completed tasks
                                 <span class="sortorder" ng-show="predicate === 'complete'" ng-class="{reverse:reverse}"></span>
                             </button>
                             <button class="filter btn btn-default" ng-click="order('title'); getIncompletedTasks()">Incompleted tasks
+                                <span class="sortorder" ng-show="predicate === 'incomplete'" ng-class="{reverse:reverse}"></span>
+                            </button>
+                            <button class="filter btn btn-default" ng-click="order('title'); tasksForToday()">Tasks for today
+                                <span class="sortorder" ng-show="predicate === 'incomplete'" ng-class="{reverse:reverse}"></span>
+                            </button>
+                            <button class="filter btn btn-default" ng-click="order('title'); tasksForWeek()">Tasks for week
                                 <span class="sortorder" ng-show="predicate === 'incomplete'" ng-class="{reverse:reverse}"></span>
                             </button>
                         </div>
@@ -428,112 +431,7 @@
                         </div>
                     </div><!-- /.box -->
 
-
-
-
-
-
-
-
-
                 </section><!-- /.Left col -->
-
-
-                <section class="col-lg-6 connectedSortable">
-                    <!-- Custom tabs (Charts with tabs)-->
-
-                    <div class="box box-primary">
-
-                        <div class="order-filters">
-                            <button class="filter btn btn-default" ng-click="order('title')">Title
-                                <span class="sortorder" ng-show="predicate === 'title'" ng-class="{reverse:reverse}"></span>
-                            </button>
-                            <button class="filter btn btn-default" ng-click="order('create_date')">Create Date
-                                <span class="sortorder" ng-show="predicate === 'create_date'" ng-class="{reverse:reverse}"></span>
-                            </button>
-                            <button class="filter btn btn-default" ng-click="order('due_date')">Due Date
-                                <span class="sortorder" ng-show="predicate === 'due_date'" ng-class="{reverse:reverse}"></span>
-                            </button>
-                            <button class="filter btn btn-default" ng-click="order('title'); tasksForToday()">Tasks for today
-                                <span class="sortorder" ng-show="predicate === 'due_date'" ng-class="{reverse:reverse}"></span>
-                            </button>
-                            <button class="filter btn btn-default" ng-click="order('complete'); getCompletedTasks() ">Completed tasks
-                                <span class="sortorder" ng-show="predicate === 'complete'" ng-class="{reverse:reverse}"></span>
-                            </button>
-                            <button class="filter btn btn-default" ng-click="order('title'); getIncompletedTasks()">Incompleted tasks
-                                <span class="sortorder" ng-show="predicate === 'incomplete'" ng-class="{reverse:reverse}"></span>
-                            </button>
-                        </div>
-
-                        <div class="box-header">
-                            <div class="box-body tasks-list">
-                                <ul project-id="" class="todo-list task"
-                                    dnd-list="todayTasks" >
-                                    <li ng-repeat="todayTask in todayTasks | orderBy:predicate:reverse"
-                                        dnd-draggable="task"
-                                        dnd-moved="project.tasks.splice($index, 1)"
-                                        dnd-effect-allowed="move"
-                                        dnd-selected="models.selected = task"
-                                        dnd-dragend=""
-
-                                        class="background-{{tasks.title}}"
-
-                                        ng-click="reorderTasks()">
-
-                                        <today-tasks info="todayTask" ng-click="editTask($event, task)" ></today-tasks>
-
-                                    </li>
-                                </ul>
-
-                                <div class="box-footer clearfix no-border ng-hide" ng-show="showTaskFields">
-                                    <form name="addTaskForm" ng-submit="addTask(reorderedTasks)">
-                                        <fieldset class="form-group">
-                                            <!--<label for="taskTitle">Task Title</label>-->
-                                            <input type="text" class="form-control" id="taskTitle" placeholder="Task Title" ng-model="addTaskForm.title">
-                                        </fieldset>
-                                        <fieldset class="form-group">
-                                            <!--<label for="taskDescription">Task Description</label>-->
-                                            <textarea class="form-control" id="taskDescription" rows="3" placeholder="Task Description" ng-model="addTaskForm.description"></textarea>
-                                        </fieldset>
-                                        <fieldset class="form-group">
-                                            <!--<label for="prioritySelect">Task Priority</label>-->
-                                            <select class="form-control" id="prioritySelect" ng-model="addTaskForm.priority">
-                                                <option selected="selected" disabled>Task Priority</option>
-                                                <option value="high">High</option>
-                                                <option value="medium">Medium</option>
-                                                <option value="low">Low</option>
-                                            </select>
-                                        </fieldset>
-                                        <fieldset class="form-group">
-                                            <!--<label for="dueDate">Task Due Date</label>-->
-                                            <input data-provide="datepicker" class="form-control" id="dueDate" placeholder="Task Due Date" ng-model="addTaskForm.due_date">
-                                        </fieldset>
-                                        <div class="buttons" ng-click="showTaskFields = !showTaskFields">
-                                            <button type="submit" class="btn btn-primary" ng-click="showTaskFields = !showTaskFields" >Add Task</button>
-                                            <button type="button" class="btn btn-link"  ng-click="clearTaskForm()">Cancel</button>
-                                        </div>
-                                    </form>
-                                </div>
-
-                                <div class="box-footer clearfix no-border" ng-show="!showTaskFields">
-                                    <button class="btn btn-default pull-right" ng-click="showTaskFields = !showTaskFields"><i class="fa fa-plus"></i> Add New Task</button>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div><!-- /.box -->
-
-
-
-
-
-
-
-
-
-                </section><!-- /.Left col -->
-
-
 
                 <!-- right col (We are only adding the ID to make the widgets sortable)-->
                 <section class="col-lg-5 connectedSortable">
