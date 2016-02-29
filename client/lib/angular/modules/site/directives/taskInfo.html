@@ -12,8 +12,8 @@
     <input type="checkbox" name="taskCompleted" ng-model="info.completed" ng-true-value="1" ng-false-value="0" ng-change="completeTask(info)">
 </span>
 <span class="text task-title" task-id="{{ info.id }}" ng-show=" !showTaskDetails ">{{ info.title }}</span>
-<span class=" create-date"  ng-show=" !showTaskDetails ">Create Date:{{ info.create_date}}</span>
-<span class=" due-date"  ng-show=" !showTaskDetails ">Due Date:{{ info.due_date}}</span>
+<!--<span class=" create-date"  ng-show=" !showTaskDetails ">Create Date:{{ info.create_date}}</span>-->
+<!--<span class=" due-date"  ng-show=" !showTaskDetails ">Due Date:{{ info.due_date}}</span>-->
 <!-- Emphasis label -->
 <small class="label" ng-class="getClass(info.due_date, info)"><i class="fa fa-clock-o"></i> {{ info.days_left }} left </small>
 

@@ -350,27 +350,48 @@
                     <div class="box box-primary">
 
                         <div class="order-filters">
-                            <button class="filter btn btn-default" ng-click="order('title')">Title
-                                <span class="sortorder" ng-show="predicate === 'title'" ng-class="{reverse:reverse}"></span>
-                            </button>
-                            <button class="filter btn btn-default" ng-click="order('create_date')">Create Date
-                                <span class="sortorder" ng-show="predicate === 'create_date'" ng-class="{reverse:reverse}"></span>
-                            </button>
-                            <button class="filter btn btn-default" ng-click="order('due_date')">Due Date
-                                <span class="sortorder" ng-show="predicate === 'due_date'" ng-class="{reverse:reverse}"></span>
-                            </button>
-                            <button class="filter btn btn-default" ng-click="order('complete'); getCompletedTasks() ">Completed tasks
-                                <span class="sortorder" ng-show="predicate === 'complete'" ng-class="{reverse:reverse}"></span>
-                            </button>
-                            <button class="filter btn btn-default" ng-click="order('incomplete'); getIncompletedTasks()">Incompleted tasks
-                                <span class="sortorder" ng-show="predicate === 'incomplete'" ng-class="{reverse:reverse}"></span>
-                            </button>
-                            <button class="filter btn btn-default" ng-click="order('todayTasks'); tasksForToday()">Tasks for today
-                                <span class="sortorder" ng-show="predicate === 'todayTasks'" ng-class="{reverse:reverse}"></span>
-                            </button>
-                            <button class="filter btn btn-default" ng-click="order('weekTasks'); tasksForWeek()">Tasks for week
-                                <span class="sortorder" ng-show="predicate === 'weekTasks'" ng-class="{reverse:reverse}"></span>
-                            </button>
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <td>
+                                        <p class="filter" ng-click="order('title')">
+                                            Title
+                                            <span class="sortorder" ng-show="predicate === 'title'" ng-class="{reverse:reverse}"></span>
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p class="filter" ng-click="order('create_date')">Create Date
+                                        <span class="sortorder" ng-show="predicate === 'create_date'" ng-class="{reverse:reverse}"></span>
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p class="filter" ng-click="order('due_date')">Due Date
+                                            <span class="sortorder" ng-show="predicate === 'due_date'" ng-class="{reverse:reverse}"></span>
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p class="filter" ng-click="order('complete'); getCompletedTasks() ">Completed tasks
+                                            <span class="sortorder" ng-show="predicate === 'complete'" ng-class="{reverse:reverse}"></span>
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p class="filter" ng-click="order('incomplete'); getIncompletedTasks()">Incompleted tasks
+                                            <span class="sortorder" ng-show="predicate === 'incomplete'" ng-class="{reverse:reverse}"></span>
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p class="filter" ng-click="order('todayTasks'); tasksForToday()">Tasks for today
+                                            <span class="sortorder" ng-show="predicate === 'todayTasks'" ng-class="{reverse:reverse}"></span>
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p class="filter" ng-click="order('weekTasks'); tasksForWeek()">Tasks for week
+                                            <span class="sortorder" ng-show="predicate === 'weekTasks'" ng-class="{reverse:reverse}"></span>
+                                        </p>
+                                    </td>
+                                </tr>
+                                </thead>
+                            </table>
                         </div>
 
                         <div class="box-header">

@@ -1,5 +1,3 @@
-
-
 ul[dnd-list],
 ul[dnd-list] > li,
 ul[dnd-list] > li task-info,
@@ -35,7 +33,6 @@ ul[dnd-list] > li task-info span {
     cursor: pointer;
 }
 
-
 .task .checker.low-priority{
     background-color: #02B1D6;
     border-color: #02B1D6;
@@ -59,10 +56,25 @@ ul[dnd-list] > li task-info span {
 
 .order-filters{
     display: block;
-    width: 80%;
+    width: 98%;
     margin: 0 auto;
-    margin-top: 3%;
+    margin-top: 1%;
 }
+
+.order-filters table {
+    margin-bottom: 0;
+}
+
+.order-filters table.table td{
+    padding: 2px;
+    vertical-align: middle;
+    text-align: center;
+}
+.order-filters table.table td p{
+    margin: 0;
+    /*font-size: 10px;*/
+}
+
 .order-filters button{
     margin: 0 0.3%;
 }
