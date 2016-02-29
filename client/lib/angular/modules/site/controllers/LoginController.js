@@ -1,11 +1,7 @@
-app.controller('LoginController', ['$scope', '$http', 'md5', '$window', '$rootScope', 'LocalStorage',
-    function($scope, $http, md5, $window, $rootScope, LocalStorage) {
+app.controller('LoginController', ['$scope', '$http', 'md5', '$window', '$rootScope', 'LocalStorage', 'localStorageService',
+    function($scope, $http, md5, $window, $rootScope, LocalStorage, localStorageService) {
     $scope.init = function(){
-
-
-
     };
-
 
     $scope.login = function(isValid){
 
@@ -27,7 +23,9 @@ app.controller('LoginController', ['$scope', '$http', 'md5', '$window', '$rootSc
         })
             .success(function(user) {
                 if(user !== 'Login incorrect'){
-                    LocalStorage.setData(user.id);
+                    if(localStorageService.isSupported) {
+                        localStorageService.set('userID', user.id);
+                    }
                     $window.location.href = '#/todomanager';
 
                 } else if(user == 'Login incorrect'){

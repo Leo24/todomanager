@@ -134,8 +134,6 @@ app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', 
 
         };
 
-        $scope.myVal = '<button ng-click=\'buttonClick()\'>I\'m button</button>';
-
         $scope.editTask=function($event, task){
             if ($event.target.className === 'fa fa-trash-o') {
                 $http({
@@ -167,10 +165,6 @@ app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', 
                         return err;
                     });
             }
-
-        };
-
-        $scope.completeTask=function(){
 
         };
 
@@ -217,34 +211,21 @@ app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', 
                 });
 
         };
-
-
         $scope.removeProject=function(project){
 
-            //$http({
-            //    method: 'DELETE',
-            //    url: window.location.origin + '/rest-api/web/projects/'+project.id,
-            //    contentType: 'text/plain; charset=utf-8'
-            //});
+            $http({
+                method: 'DELETE',
+                url: window.location.origin + '/rest-api/web/projects/'+project.id,
+                contentType: 'text/plain; charset=utf-8'
+            });
 
-            //var newProjects = [];
-            //angular.forEach($scope.projects, function(value, key) {
-            //    if(value.id !== project.id){
-            //        newProjects.push(value);
-            //    }
-            //}, newProjects);
-            //$scope.projects = newProjects;
-
-
-            for (var i = $scope.projects.length - 1; i >= 0; i--) {
-                if ($scope.projects[i].id == project.id) {
-                    $scope.projects.splice(i, 1);
+            var newProjects = [];
+            angular.forEach($scope.projects, function(value, key) {
+                if(value.id !== project.id){
+                    newProjects.push(value);
                 }
-            }
-
-
-            debugger;
-            $window.location.href = '#/todomanager';
+            }, newProjects);
+            $scope.projects = newProjects;
 
         };
 
@@ -262,7 +243,6 @@ app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', 
         };
 
 
-        //$scope.today = new Date();
         $scope.today = $filter('date')(new Date(), "yyyy-MM-dd");
 
 
@@ -285,11 +265,11 @@ app.controller('ProjectsController', ['$scope', 'projects', '$filter', '$http', 
         };
 
         $scope.getCompletedTasks=function(){
-
+            $scope.project.tasks = $scope.project.completedTasks;
         };
 
         $scope.getIncompletedTasks=function(){
-
+            $scope.project.tasks = $scope.project.inCompletedTasks;
         };
 
         $scope.logout=function(){

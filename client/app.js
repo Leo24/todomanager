@@ -1,4 +1,4 @@
-var app = angular.module('ToDoManager', ['dndLists', 'ngMaterial', 'ngRoute', 'angular-md5']);
+var app = angular.module('ToDoManager', ['dndLists', 'ngMaterial', 'ngRoute', 'angular-md5', 'LocalStorageModule']);
 
 app.filter('capitalize', function() {
     return function(input, $scope) {
@@ -30,6 +30,12 @@ app.controller( 'AppCtrl', function AppCtrl ( $scope, $location ) {
             $scope.pageTitle = nextRoute.$$route.pageTitle + ' | Auth0 Sample' ;
         }
     });
-})
+});
 
-;
+
+app.config(function (localStorageServiceProvider) {
+    localStorageServiceProvider
+        .setPrefix('myApp')
+        .setStorageType('sessionStorage')
+        .setNotify(true, true)
+});
