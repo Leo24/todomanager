@@ -13,6 +13,7 @@ app.factory('projects', ['$http', 'localStorageService', '$window', function($ht
             .success(function(data) {
                 service.tasksForToday(data);
                 service.tasksForWeek(data);
+                service.getCompletedTasks(data);
                 callback(data);
             })
             .error(function(err) {
@@ -61,6 +62,25 @@ app.factory('projects', ['$http', 'localStorageService', '$window', function($ht
                 }
             }, weekTasks);
             project.weekTasks = weekTasks;
+        });
+        return data;
+    };
+
+
+    service.getCompletedTasks=function(data){
+        angular.forEach(data, function(project) {
+            var completedTasks = [];
+            var inCompletedTasks = [];
+            angular.forEach(project.tasks, function(value, key) {
+                if (value.completed == 0) {
+                    inCompletedTasks.push(value);
+                }else{
+                    completedTasks.push(value);
+                }
+            }, inCompletedTasks, completedTasks);
+            project.inCompletedTasks = inCompletedTasks;
+            project.completedTasks = completedTasks;
+
         });
         return data;
     };

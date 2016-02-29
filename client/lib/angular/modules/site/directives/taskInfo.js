@@ -9,7 +9,28 @@ app.directive('taskInfo', function()
         },
 
         templateUrl: 'lib/angular/modules/site/directives/taskInfo.html',
-        link: function(scope, element, attrs) {
+        controller: function($scope, $http){
+
+            $scope.completeTask=function(info){
+                var task = info;
+                $http({
+                    method: 'POST',
+                    url: window.location.origin + '/rest-api/web/tasks/update-task',
+                    data: {newTask: task},
+                    contentType: 'application/json; charset=utf-8'
+                })
+                    .success(function(data) {
+                        console.log(data);
+                        return data;
+                    })
+                    .error(function(err) {
+                        return err;
+                    });
+
+            };
+
+        },
+        link: function(scope, element, attrs, $http) {
             scope.getClass =  function(due_date, task) {
                 var end_date, today, days_left;
                 end_date = new Date(due_date);
@@ -32,8 +53,7 @@ app.directive('taskInfo', function()
                 } else if (days_left <= 0) {
                     return 'label-danger';
                 }
-            }
-
+            };
         }
     };
 

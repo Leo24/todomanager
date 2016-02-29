@@ -58,7 +58,7 @@ class TasksController extends ActiveController
             $task->create_date   =   $date;
             $task->project_id    =   $newTask['projectId'];
             $task->task_order    =   $newTask['taskOrder'];
-            $task->complited     =   0;
+            $task->completed     =   0;
             $task->save();
 
             if ($task->save() !== false) {
@@ -83,7 +83,7 @@ class TasksController extends ActiveController
             $task->create_date   =   $newTask['create_date'];
             $task->project_id    =   $newTask['project_id'];
             $task->task_order    =   $newTask['task_order'];
-            $task->complited     =   $newTask['complited'];
+            $task->completed     =   $newTask['completed'];
             $task->update();
 
             if ($task->update() !== false) {

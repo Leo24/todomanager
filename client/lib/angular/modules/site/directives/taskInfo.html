@@ -7,18 +7,20 @@
 <!-- checkbox -->
 <!--<input type="checkbox" value="" name="" ng-model="isDone" ng-change="completeTask(isDone)">-->
 <!-- todo text -->
-<span class="checker {{ info.priority | lowercase }}-priority " ng-click="completeTask()"></span>
+<span class="checker {{ info.priority | lowercase }}-priority " title="{{ info.priority }} task priority "></span>
+<span class="complete-task" title="Check to complete task">
+    <input type="checkbox" name="taskCompleted" ng-model="info.completed" ng-true-value="1" ng-false-value="0" ng-change="completeTask(info)">
+</span>
 <span class="text task-title" task-id="{{ info.id }}" ng-show=" !showTaskDetails ">{{ info.title }}</span>
-<span class="text create-date"  ng-show=" !showTaskDetails ">Create Date:{{ info.create_date}}</span>
-<span class="text due-date"  ng-show=" !showTaskDetails ">Due Date:{{ info.due_date}}</span>
+<span class=" create-date"  ng-show=" !showTaskDetails ">Create Date:{{ info.create_date}}</span>
+<span class=" due-date"  ng-show=" !showTaskDetails ">Due Date:{{ info.due_date}}</span>
 <!-- Emphasis label -->
 <small class="label" ng-class="getClass(info.due_date, info)"><i class="fa fa-clock-o"></i> {{ info.days_left }} left </small>
 
-<span class="completed" ng-show="info.completed === '1'">Completed</span>
 <!-- General tools such as edit or delete-->
 <div class="tools">
-    <i class="fa fa-edit" ng-click="showTaskDetails = !showTaskDetails"></i>
-    <i class="fa fa-trash-o" ng-click="editTask(info)"></i>
+    <i class="fa fa-edit" title="Edit Task" ng-click="showTaskDetails = !showTaskDetails"></i>
+    <i class="fa fa-trash-o" title="Remove Task" ng-click="editTask(info)"></i>
 </div>
 
 <form class="ng-hide" name="{{ info.title }}" ng-submit="editTask(info)" ng-show="showTaskDetails">

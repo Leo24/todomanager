@@ -362,14 +362,14 @@
                             <button class="filter btn btn-default" ng-click="order('complete'); getCompletedTasks() ">Completed tasks
                                 <span class="sortorder" ng-show="predicate === 'complete'" ng-class="{reverse:reverse}"></span>
                             </button>
-                            <button class="filter btn btn-default" ng-click="order('title'); getIncompletedTasks()">Incompleted tasks
+                            <button class="filter btn btn-default" ng-click="order('incomplete'); getIncompletedTasks()">Incompleted tasks
                                 <span class="sortorder" ng-show="predicate === 'incomplete'" ng-class="{reverse:reverse}"></span>
                             </button>
-                            <button class="filter btn btn-default" ng-click="order('title'); tasksForToday()">Tasks for today
-                                <span class="sortorder" ng-show="predicate === 'incomplete'" ng-class="{reverse:reverse}"></span>
+                            <button class="filter btn btn-default" ng-click="order('todayTasks'); tasksForToday()">Tasks for today
+                                <span class="sortorder" ng-show="predicate === 'todayTasks'" ng-class="{reverse:reverse}"></span>
                             </button>
-                            <button class="filter btn btn-default" ng-click="order('title'); tasksForWeek()">Tasks for week
-                                <span class="sortorder" ng-show="predicate === 'incomplete'" ng-class="{reverse:reverse}"></span>
+                            <button class="filter btn btn-default" ng-click="order('weekTasks'); tasksForWeek()">Tasks for week
+                                <span class="sortorder" ng-show="predicate === 'weekTasks'" ng-class="{reverse:reverse}"></span>
                             </button>
                         </div>
 
